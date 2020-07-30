@@ -6,34 +6,40 @@ import User from '../models/User';
 import AppError from '../errors/AppError';
 
 interface Request {
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 class CreateUserService {
   public async execute({
-    first_name,
-    last_name,
+    firstName,
+    lastName,
     email,
     password,
+    confirmPassword,
   }: Request): Promise<User> {
     const usersRespository = getRepository(User);
+
+    if (password !== confirmPassword) {
+      throw new AppError('Senhas não conferem!');
+    }
 
     const checkUsersExists = await usersRespository.findOne({
       where: { email },
     });
 
     if (checkUsersExists) {
-      throw new AppError('Email already exists!');
+      throw new AppError('Esse e-mail já foi cadastrado!');
     }
 
     const hashedPassword = await hash(password, 8);
 
     const user = usersRespository.create({
-      first_name,
-      last_name,
+      first_name: firstName,
+      last_name: lastName,
       email,
       password: hashedPassword,
     });

@@ -25,13 +25,13 @@ class AuthenticateUserService {
     });
 
     if (!user) {
-      throw new AppError('Incorrect email/password combination.', 401);
+      throw new AppError('E-mail não cadastrado!', 401);
     }
 
     const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
-      throw new AppError('Incorrect email/password combination.', 401);
+      throw new AppError('Senha incorreta!', 401);
     }
 
     const token = sign({}, authConfig.jwt.secret, {

@@ -6,15 +6,22 @@ const usersRoutes = Router();
 
 usersRoutes.post('/', async (request, response) => {
   try {
-    const { first_name, last_name, email, password } = request.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    } = request.body;
 
     const createUser = new CreateUserService();
 
     const user = await createUser.execute({
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       password,
+      confirmPassword,
     });
 
     delete user.password;
