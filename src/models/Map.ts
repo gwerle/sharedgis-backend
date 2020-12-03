@@ -4,30 +4,31 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
   OneToMany,
 } from 'typeorm';
 
+import User from './User';
 import UsersMaps from './UserMaps';
 
-@Entity('users')
-class User {
+@Entity('maps')
+class Map {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  first_name: string;
+  map_name: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'owner' })
+  user: User;
 
   @Column()
-  last_name: string;
+  owner: string;
 
-  @Column()
-  email: string;
-
-  @OneToMany(() => UsersMaps, usersMaps => usersMaps.user_id)
+  @OneToMany(() => UsersMaps, usersMaps => usersMaps.map_id)
   users_maps: UsersMaps[];
-
-  @Column()
-  password: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -36,4 +37,4 @@ class User {
   updated_at: Date;
 }
 
-export default User;
+export default Map;
