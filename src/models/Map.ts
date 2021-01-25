@@ -6,11 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import User from './User';
-import UsersMaps from './UserMaps';
 
 @Entity('maps')
 class Map {
@@ -27,8 +27,9 @@ class Map {
   @Column()
   owner: string;
 
-  @OneToMany(() => UsersMaps, usersMaps => usersMaps.map_id)
-  users_maps: UsersMaps[];
+  @ManyToMany(() => User)
+  @JoinTable({ name: 'users_maps' })
+  users: User[];
 
   @CreateDateColumn()
   created_at: Date;

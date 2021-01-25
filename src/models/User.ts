@@ -4,10 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
-
-import UsersMaps from './UserMaps';
 
 @Entity('users')
 class User {
@@ -22,9 +19,6 @@ class User {
 
   @Column()
   email: string;
-
-  @OneToMany(() => UsersMaps, usersMaps => usersMaps.user_id)
-  users_maps: UsersMaps[];
 
   @Column()
   password: string;
