@@ -27,6 +27,9 @@ class Map {
   @Column()
   owner: string;
 
+  @Column()
+  description: string;
+
   @ManyToMany(() => User)
   @JoinTable({ name: 'users_maps' })
   users: User[];

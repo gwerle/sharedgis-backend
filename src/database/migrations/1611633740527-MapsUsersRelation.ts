@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export default class MapsUsersRelation1611549453668
+export default class MapsUsersRelation1611633740527
   implements MigrationInterface {
-  name = 'MapsUsersRelation1611549453668';
+  name = 'MapsUsersRelation1611633740527';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`ALTER TABLE "maps" DROP CONSTRAINT "MapsUsers"`);
@@ -25,7 +25,7 @@ export default class MapsUsersRelation1611549453668
       `ALTER TABLE "users" DROP CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "maps" ALTER COLUMN "owner" SET NOT NULL`,
+      `ALTER TABLE "maps" ALTER COLUMN "description" SET NOT NULL`,
     );
     await queryRunner.query(
       `ALTER TABLE "maps" ADD CONSTRAINT "FK_2840fb8316357cbf6c5545548c9" FOREIGN KEY ("owner") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -49,7 +49,7 @@ export default class MapsUsersRelation1611549453668
       `ALTER TABLE "maps" DROP CONSTRAINT "FK_2840fb8316357cbf6c5545548c9"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "maps" ALTER COLUMN "owner" DROP NOT NULL`,
+      `ALTER TABLE "maps" ALTER COLUMN "description" DROP NOT NULL`,
     );
     await queryRunner.query(
       `ALTER TABLE "users" ADD CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email")`,

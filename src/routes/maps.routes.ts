@@ -13,18 +13,22 @@ mapsRoutes.use(ensureAuthenticated);
 mapsRoutes.get('/', async (request, response) => {
   const mapsRepository = getCustomRepository(MapsRepository);
   const maps = await mapsRepository.getByUserId(request.user.id);
+
   return response.json(maps);
 });
 
 mapsRoutes.post('/', async (request, response) => {
   const userId = request.user.id;
-  const { mapName } = request.body;
+  const { mapName, description } = request.body;
   const createMap = new CreateMap();
 
   const map = await createMap.execute({
     mapName,
+    description,
     userId,
   });
+
+  delete map.users;
 
   return response.json(map);
 });

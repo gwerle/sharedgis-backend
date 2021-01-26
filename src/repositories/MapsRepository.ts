@@ -8,11 +8,14 @@ class MapsRepository extends Repository<Map> {
       relations: ['users'],
     });
 
-    const byUser = getAll.filter(item => {
+    const mapsByUser = getAll.filter(item => {
       return item.users.some(user => user.id === userId);
     });
 
-    return byUser || null;
+    // eslint-disable-next-line no-param-reassign
+    mapsByUser.forEach(i => delete i.users);
+
+    return mapsByUser || null;
   }
 }
 

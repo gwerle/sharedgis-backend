@@ -19,9 +19,14 @@ export default class CreateMaps1606957254842 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'description',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
             name: 'owner',
             type: 'uuid',
-            isNullable: true,
+            isNullable: false,
           },
         ],
       }),
