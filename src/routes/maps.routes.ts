@@ -4,6 +4,7 @@ import { getCustomRepository } from 'typeorm';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import MapsRepository from '../repositories/MapsRepository';
 import CreateMap from '../services/CreateMap';
+import ShareMap from '../services/ShareMap';
 
 const mapsRoutes = Router();
 
@@ -23,6 +24,20 @@ mapsRoutes.post('/', async (request, response) => {
   const map = await createMap.execute({
     mapName,
     userId,
+  });
+
+  return response.json(map);
+});
+
+mapsRoutes.put('/:id/share', async (request, response) => {
+  const mapId = request.params.id;
+  const { user } = request.body;
+
+  const shareMap = new ShareMap();
+
+  const map = await shareMap.execute({
+    mapId,
+    user,
   });
 
   return response.json(map);
