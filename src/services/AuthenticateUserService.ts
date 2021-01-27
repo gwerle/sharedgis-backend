@@ -34,10 +34,17 @@ class AuthenticateUserService {
       throw new AppError('Senha incorreta!', 401);
     }
 
-    const token = sign({}, authConfig.jwt.secret, {
-      subject: user.id,
-      expiresIn: authConfig.jwt.expiresIn,
-    });
+    const token = sign(
+      {
+        first_name: user.first_name,
+        last_name: user.last_name,
+      },
+      authConfig.jwt.secret,
+      {
+        subject: user.id,
+        expiresIn: authConfig.jwt.expiresIn,
+      },
+    );
 
     return {
       user,
