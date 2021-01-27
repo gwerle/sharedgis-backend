@@ -18,7 +18,10 @@ export default function ensureAuthenticated(
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new AuthError('JWT token is missing!', 401);
+    throw new AuthError(
+      'Ocorreu um erro com a autenticação. Favor logar novamente.',
+      401,
+    );
   }
 
   const [, token] = authHeader.split(' ');
@@ -34,6 +37,9 @@ export default function ensureAuthenticated(
 
     return next();
   } catch (error) {
-    throw new AuthError('Invalid JWT token', 401);
+    throw new AuthError(
+      'Ocorreu um erro com a autenticação. Favor logar novamente.',
+      401,
+    );
   }
 }
