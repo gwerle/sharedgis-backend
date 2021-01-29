@@ -8,7 +8,6 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import { Geometry } from 'geojson';
 import Map from './Map';
 
 type RoadWay = 'ONE_WAY' | 'BOTH_WAY';
@@ -46,8 +45,8 @@ class Roads {
   @Column()
   have_bus_lines: boolean;
 
-  @Column({ type: 'geography', srid: 4326 })
-  geom: Geometry;
+  @Column()
+  geom: string;
 
   @CreateDateColumn()
   created_at: Date;

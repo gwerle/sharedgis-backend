@@ -14,6 +14,11 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
+            name: 'map_id',
+            type: 'uuid',
+            isNullable: false,
+          },
+          {
             name: 'name',
             type: 'varchar',
             isNullable: false,
@@ -44,6 +49,8 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
           {
             name: 'geom',
             type: 'geography',
+            spatialFeatureType: 'Linestring',
+            srid: 4326,
           },
           {
             name: 'created_at',
