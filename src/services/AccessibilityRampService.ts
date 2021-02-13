@@ -4,9 +4,9 @@ import AccessibilityRamp from '../models/AccessibilityRamp';
 interface POSTRequest {
   map_id: string;
   inclination: string;
-  haveVisionNotification: boolean;
+  haveVisualNotification: boolean;
   lat: number;
-  long: number;
+  lng: number;
 }
 
 interface GETRequest {
@@ -17,16 +17,16 @@ class CreateAccessibilityRamp {
   public async create({
     map_id,
     inclination,
-    haveVisionNotification,
+    haveVisualNotification,
     lat,
-    long,
+    lng,
   }: POSTRequest): Promise<AccessibilityRamp> {
     const accessibilityRampRepository = getRepository(AccessibilityRamp);
 
     const accesibilityRamp = await accessibilityRampRepository.query(
       'INSERT INTO accessibility_ramps (map_id, inclination, have_vision_notification, geom)' +
         'VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($4, $5), 4326))',
-      [map_id, inclination, haveVisionNotification, long, lat],
+      [map_id, inclination, haveVisualNotification, lng, lat],
     );
 
     return accesibilityRamp;
@@ -40,7 +40,15 @@ class CreateAccessibilityRamp {
       [map_id],
     );
 
-    return accesibilityRamp;
+    const accesibilityRampFormatted = accesibilityRamp.map((item: any) => {
+      return {
+        ...item,
+        lng: item.st_x,
+        lat: item.st_y,
+      };
+    });
+
+    return accesibilityRampFormatted;
   }
 }
 
