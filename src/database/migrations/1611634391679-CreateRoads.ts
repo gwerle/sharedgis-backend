@@ -21,30 +21,35 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
           {
             name: 'name',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'way',
             type: 'enum',
             enum: ['ONE_WAY', 'BOTH_WAY'],
+            isNullable: true,
           },
           {
             name: 'slope',
             type: 'enum',
             enum: ['LOW', 'MEDIUM', 'HIGH'],
+            isNullable: true,
           },
           {
             name: 'paved',
             type: 'boolean',
+            isNullable: true,
           },
           {
             name: 'road_condition',
             type: 'enum',
             enum: ['EXCELENT', 'GOOD', 'INTERMEDIATE', 'HORRIBLE'],
+            isNullable: true,
           },
           {
             name: 'have_bus_lines',
             type: 'boolean',
+            isNullable: true,
           },
           {
             name: 'geom',

@@ -23,10 +23,12 @@ export default class CreateAccessibilityRamps1611893258441
             name: 'inclination',
             type: 'enum',
             enum: ['LOW', 'MEDIUM', 'HIGH'],
+            isNullable: true,
           },
           {
             name: 'have_vision_notification',
             type: 'boolean',
+            isNullable: true,
           },
           {
             name: 'geom',
