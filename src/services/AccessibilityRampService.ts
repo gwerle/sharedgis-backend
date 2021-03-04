@@ -7,6 +7,7 @@ interface POSTRequest {
   haveVisualNotification: boolean;
   lat: number;
   lng: number;
+  notes: string;
 }
 
 interface GETRequest {
@@ -20,13 +21,14 @@ class CreateAccessibilityRamp {
     haveVisualNotification,
     lat,
     lng,
+    notes,
   }: POSTRequest): Promise<AccessibilityRamp> {
     const accessibilityRampRepository = getRepository(AccessibilityRamp);
 
     const accesibilityRamp = await accessibilityRampRepository.query(
-      'INSERT INTO accessibility_ramps (map_id, inclination, have_vision_notification, geom)' +
-        'VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($4, $5), 4326))',
-      [map_id, inclination, haveVisualNotification, lng, lat],
+      'INSERT INTO accessibility_ramps (map_id, inclination, have_visual_notification, notes, geom)' +
+        'VALUES ($1, $2, $3, $4, ST_SetSRID(ST_MakePoint($5, $6), 4326))',
+      [map_id, inclination, haveVisualNotification, notes, lng, lat],
     );
 
     return accesibilityRamp;
@@ -36,7 +38,7 @@ class CreateAccessibilityRamp {
     const accessibilityRampRepository = getRepository(AccessibilityRamp);
 
     const accesibilityRamp = await accessibilityRampRepository.query(
-      'SELECT id, map_id, inclination, have_vision_notification, ST_X(geom::geometry), ST_Y(geom::geometry) FROM accessibility_ramps WHERE map_id = $1',
+      'SELECT id, map_id, inclination, have_visual_notification, ST_X(geom::geometry), ST_Y(geom::geometry) FROM accessibility_ramps WHERE map_id = $1',
       [map_id],
     );
 

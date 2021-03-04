@@ -29,7 +29,10 @@ class AccessibilityRamp {
   map: Map;
 
   @Column()
-  have_vision_notification: boolean;
+  have_visual_notification: boolean;
+
+  @Column()
+  notes: string;
 
   @Column()
   geom: string;

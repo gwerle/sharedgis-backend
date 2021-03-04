@@ -26,8 +26,13 @@ export default class CreateAccessibilityRamps1611893258441
             isNullable: true,
           },
           {
-            name: 'have_vision_notification',
+            name: 'have_visual_notification',
             type: 'boolean',
+            isNullable: true,
+          },
+          {
+            name: 'notes',
+            type: 'varchar',
             isNullable: true,
           },
           {

@@ -13,6 +13,7 @@ accessibilityRampsRoutes.post('/', async (request, response) => {
     haveVisualNotification,
     lat,
     lng,
+    notes,
   } = request.body;
   const accessibilityRampService = new AccessibilityRampService();
 
@@ -22,6 +23,7 @@ accessibilityRampsRoutes.post('/', async (request, response) => {
     haveVisualNotification,
     lat,
     lng,
+    notes,
   });
 
   return response.json(accessibilityRamp);
