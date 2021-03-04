@@ -1,10 +1,16 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export default class CreateRoads1611634391679 implements MigrationInterface {
+export default class CreateBikeSupportPoint1614828635562
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'roads',
+        name: 'bike_support_points',
         columns: [
           {
             name: 'id',
@@ -19,35 +25,17 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'name',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'way',
-            type: 'enum',
-            enum: ['ONE_WAY', 'BOTH_WAY'],
-            isNullable: true,
-          },
-          {
-            name: 'slope',
-            type: 'enum',
-            enum: ['LOW', 'MEDIUM', 'HIGH'],
-            isNullable: true,
-          },
-          {
-            name: 'paved',
+            name: 'have_pump_tire_bomb',
             type: 'boolean',
             isNullable: true,
           },
           {
-            name: 'road_condition',
-            type: 'enum',
-            enum: ['EXCELENT', 'GOOD', 'INTERMEDIATE', 'HORRIBLE'],
+            name: 'have_food_to_sell',
+            type: 'boolean',
             isNullable: true,
           },
           {
-            name: 'have_bus_lines',
+            name: 'have_bike_support_parts',
             type: 'boolean',
             isNullable: true,
           },
@@ -59,7 +47,7 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
           {
             name: 'geom',
             type: 'geography',
-            spatialFeatureType: 'Linestring',
+            spatialFeatureType: 'Point',
             srid: 4326,
           },
           {
@@ -75,9 +63,25 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
         ],
       }),
     );
+
+    await queryRunner.createForeignKey(
+      'bike_support_points',
+      new TableForeignKey({
+        name: 'BikeSupportPointsMaps',
+        columnNames: ['map_id'],
+        referencedTableName: 'maps',
+        referencedColumnNames: ['id'],
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('roads');
+    await queryRunner.dropForeignKey(
+      'bike_support_points',
+      'BikeSupportPointsMaps',
+    );
+    await queryRunner.dropTable('bike_support_points');
   }
 }

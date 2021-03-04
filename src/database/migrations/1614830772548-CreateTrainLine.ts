@@ -1,10 +1,16 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export default class CreateRoads1611634391679 implements MigrationInterface {
+export default class CreateTrainLine1614830772548
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'roads',
+        name: 'train_lines',
         columns: [
           {
             name: 'id',
@@ -17,39 +23,6 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
             name: 'map_id',
             type: 'uuid',
             isNullable: false,
-          },
-          {
-            name: 'name',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'way',
-            type: 'enum',
-            enum: ['ONE_WAY', 'BOTH_WAY'],
-            isNullable: true,
-          },
-          {
-            name: 'slope',
-            type: 'enum',
-            enum: ['LOW', 'MEDIUM', 'HIGH'],
-            isNullable: true,
-          },
-          {
-            name: 'paved',
-            type: 'boolean',
-            isNullable: true,
-          },
-          {
-            name: 'road_condition',
-            type: 'enum',
-            enum: ['EXCELENT', 'GOOD', 'INTERMEDIATE', 'HORRIBLE'],
-            isNullable: true,
-          },
-          {
-            name: 'have_bus_lines',
-            type: 'boolean',
-            isNullable: true,
           },
           {
             name: 'notes',
@@ -75,9 +48,22 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
         ],
       }),
     );
+
+    await queryRunner.createForeignKey(
+      'train_lines',
+      new TableForeignKey({
+        name: 'TrainLinesMaps',
+        columnNames: ['map_id'],
+        referencedTableName: 'maps',
+        referencedColumnNames: ['id'],
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKey('train_lines', 'TrainLinesMaps');
     await queryRunner.dropTable('roads');
   }
 }

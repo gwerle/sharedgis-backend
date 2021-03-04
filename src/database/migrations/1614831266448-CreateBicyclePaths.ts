@@ -1,10 +1,16 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export default class CreateRoads1611634391679 implements MigrationInterface {
+export default class CreateBicyclePaths1614831266448
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'roads',
+        name: 'bicycle_paths',
         columns: [
           {
             name: 'id',
@@ -19,36 +25,24 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'name',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'way',
+            name: 'surface_situation',
+            enum: [
+              'EXCELENT',
+              'GOOD',
+              'INTERMEDIATE',
+              'BAD',
+              'VERY_BAD',
+              'HORRIBLE',
+              'VERY_HORRIBLE',
+              'IMPASSABLE',
+            ],
             type: 'enum',
-            enum: ['ONE_WAY', 'BOTH_WAY'],
             isNullable: true,
           },
           {
-            name: 'slope',
+            name: 'bicycle_path_type',
+            enum: ['CICLOVIA', 'CICLORROTA', 'CICLOFAIXA', 'COMPARTILHADA'],
             type: 'enum',
-            enum: ['LOW', 'MEDIUM', 'HIGH'],
-            isNullable: true,
-          },
-          {
-            name: 'paved',
-            type: 'boolean',
-            isNullable: true,
-          },
-          {
-            name: 'road_condition',
-            type: 'enum',
-            enum: ['EXCELENT', 'GOOD', 'INTERMEDIATE', 'HORRIBLE'],
-            isNullable: true,
-          },
-          {
-            name: 'have_bus_lines',
-            type: 'boolean',
             isNullable: true,
           },
           {
@@ -75,9 +69,22 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
         ],
       }),
     );
+
+    await queryRunner.createForeignKey(
+      'bicycle_paths',
+      new TableForeignKey({
+        name: 'BicyclePathsMaps',
+        columnNames: ['map_id'],
+        referencedTableName: 'maps',
+        referencedColumnNames: ['id'],
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('roads');
+    await queryRunner.dropForeignKey('bicycle_paths', 'BicyclePathsMaps');
+    await queryRunner.dropTable('bicycle_paths');
   }
 }

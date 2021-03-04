@@ -1,10 +1,15 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export default class CreateRoads1611634391679 implements MigrationInterface {
+export default class CreateBusStop1614829945950 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'roads',
+        name: 'bus_stops',
         columns: [
           {
             name: 'id',
@@ -19,35 +24,32 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'name',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'way',
-            type: 'enum',
-            enum: ['ONE_WAY', 'BOTH_WAY'],
-            isNullable: true,
-          },
-          {
-            name: 'slope',
-            type: 'enum',
-            enum: ['LOW', 'MEDIUM', 'HIGH'],
-            isNullable: true,
-          },
-          {
-            name: 'paved',
+            name: 'accessible_to_wheelchair',
             type: 'boolean',
             isNullable: true,
           },
           {
-            name: 'road_condition',
-            type: 'enum',
-            enum: ['EXCELENT', 'GOOD', 'INTERMEDIATE', 'HORRIBLE'],
+            name: 'have_visual_notification',
+            type: 'boolean',
             isNullable: true,
           },
           {
-            name: 'have_bus_lines',
+            name: 'have_sound_notification',
+            type: 'boolean',
+            isNullable: true,
+          },
+          {
+            name: 'rain_covered',
+            type: 'boolean',
+            isNullable: true,
+          },
+          {
+            name: 'have_bus_lines_demonstrations',
+            type: 'boolean',
+            isNullable: true,
+          },
+          {
+            name: 'have_seats',
             type: 'boolean',
             isNullable: true,
           },
@@ -59,7 +61,7 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
           {
             name: 'geom',
             type: 'geography',
-            spatialFeatureType: 'Linestring',
+            spatialFeatureType: 'Point',
             srid: 4326,
           },
           {
@@ -75,9 +77,22 @@ export default class CreateRoads1611634391679 implements MigrationInterface {
         ],
       }),
     );
+
+    await queryRunner.createForeignKey(
+      'bus_stops',
+      new TableForeignKey({
+        name: 'BusStopsMaps',
+        columnNames: ['map_id'],
+        referencedTableName: 'maps',
+        referencedColumnNames: ['id'],
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('roads');
+    await queryRunner.dropForeignKey('bus_stops', 'BusStopsMaps');
+    await queryRunner.dropTable('bus_stops');
   }
 }
