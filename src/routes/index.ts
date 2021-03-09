@@ -5,6 +5,7 @@ import mapsRoutes from './maps.routes';
 import roadsRoutes from './roads.routes';
 import accessibilityRampsRoutes from './accessibilityRamps.routes';
 import bicyclePathRoutes from './bicyclePath.routes';
+import bikeParksRoutes from './bikeParks.routes';
 
 const routes = Router();
 
@@ -14,5 +15,6 @@ routes.use('/maps', mapsRoutes);
 routes.use('/roads', roadsRoutes);
 routes.use('/accessibility-ramps', accessibilityRampsRoutes);
 routes.use('/bicycle-paths', bicyclePathRoutes);
+routes.use('/bike-parks', bikeParksRoutes);
 
 export default routes;

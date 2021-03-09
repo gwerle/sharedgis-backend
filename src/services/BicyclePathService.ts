@@ -32,7 +32,7 @@ class BicyclePathService {
     const query = `LINESTRING(${linestringFormatted})`;
 
     const bicyclePath = await bicyclePathRepository.query(
-      'INSERT INTO roads (map_id, surface_situation, bicycle_path_type, notes, geom)' +
+      'INSERT INTO bicycle_paths (map_id, surface_situation, bicycle_path_type, notes, geom)' +
         `VALUES ($1, $2, $3, $4, ST_GeomFromText($5))`,
       [map_id, surfaceSituation, bicyclePathType, notes, query],
     );
@@ -44,7 +44,7 @@ class BicyclePathService {
     const bicyclePathRepository = getRepository(BicyclePath);
 
     const bicyclePaths = await bicyclePathRepository.query(
-      'SELECT map_id, surface_situation, bicycle_path_type, notes, ST_AsText(geom) FROM roads WHERE map_id = $1',
+      'SELECT map_id, surface_situation, bicycle_path_type, notes, ST_AsText(geom) FROM bicycle_paths WHERE map_id = $1',
       [map_id],
     );
 

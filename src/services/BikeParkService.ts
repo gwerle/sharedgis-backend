@@ -24,7 +24,7 @@ class BikeParkService {
     const bikeParkRepository = getRepository(BikePark);
 
     const bikePark = await bikeParkRepository.query(
-      'INSERT INTO accessibility_ramps (map_id, bike_racks_conditions, notes, geom)' +
+      'INSERT INTO bike_parks (map_id, bike_racks_conditions, notes, geom)' +
         'VALUES ($1, $2, $3, ST_SetSRID(ST_MakePoint($4, $5), 4326))',
       [map_id, bikeRacksCondition, notes, lng, lat],
     );
@@ -32,11 +32,11 @@ class BikeParkService {
     return bikePark;
   }
 
-  public async getByMap({ map_id }: GETRequest): Promise<BikePark> {
+  public async getByMapId({ map_id }: GETRequest): Promise<BikePark> {
     const bikeParkRepository = getRepository(BikePark);
 
     const bikePark = await bikeParkRepository.query(
-      'SELECT id, map_id, inclination, ST_X(geom::geometry), ST_Y(geom::geometry) FROM accessibility_ramps WHERE map_id = $1',
+      'SELECT id, map_id, bike_racks_conditions, notes, ST_X(geom::geometry), ST_Y(geom::geometry) FROM bike_parks WHERE map_id = $1',
       [map_id],
     );
 
