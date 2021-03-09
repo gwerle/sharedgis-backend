@@ -8,6 +8,7 @@ import bicyclePathRoutes from './bicyclePath.routes';
 import bikeParksRoutes from './bikeParks.routes';
 import bikeSupportPointsRoutes from './bikeSupportPoints.routes';
 import busStopsRoutes from './busStops.routes';
+import sidewalkObstaclesRoutes from './sidewalkObstacles.routes';
 
 const routes = Router();
 
@@ -20,5 +21,6 @@ routes.use('/bicycle-paths', bicyclePathRoutes);
 routes.use('/bike-parks', bikeParksRoutes);
 routes.use('/bike-support-points', bikeSupportPointsRoutes);
 routes.use('/bus-stops', busStopsRoutes);
+routes.use('/sidewalk-obstacles', sidewalkObstaclesRoutes);
 
 export default routes;
