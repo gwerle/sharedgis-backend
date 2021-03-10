@@ -22,7 +22,7 @@ class SidewalkObstacleService {
     const sidewalkObstacleService = getRepository(SidewalkObstacle);
 
     const sidewalkObstacle = await sidewalkObstacleService.query(
-      'INSERT INTO bike_support_points (map_id, notes, geom)' +
+      'INSERT INTO sidewalk_obstacles (map_id, notes, geom)' +
         'VALUES ($1, $2, ST_SetSRID(ST_MakePoint($3, $4), 4326))',
       [map_id, notes, lng, lat],
     );
@@ -34,7 +34,7 @@ class SidewalkObstacleService {
     const sidewalkObstacleService = getRepository(SidewalkObstacle);
 
     const sidewalkObstacle = await sidewalkObstacleService.query(
-      'SELECT id, map_id, notes, ST_X(geom::geometry), ST_Y(geom::geometry) FROM bike_support_points WHERE map_id = $1',
+      'SELECT id, map_id, notes, ST_X(geom::geometry), ST_Y(geom::geometry) FROM sidewalk_obstacles WHERE map_id = $1',
       [map_id],
     );
 
