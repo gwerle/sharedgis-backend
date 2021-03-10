@@ -15,6 +15,7 @@ roadsRoutes.post('/', async (request, response) => {
     paved,
     roadCondition,
     havePublicTransportation,
+    notes,
     linestring,
   } = request.body;
 
@@ -28,6 +29,7 @@ roadsRoutes.post('/', async (request, response) => {
     paved,
     roadCondition,
     havePublicTransportation,
+    notes,
     linestring,
   });
 
