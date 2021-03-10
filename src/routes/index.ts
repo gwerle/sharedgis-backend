@@ -11,6 +11,7 @@ import busStopsRoutes from './busStops.routes';
 import sidewalkObstaclesRoutes from './sidewalkObstacles.routes';
 import sidewalksRoutes from './sidewalks.routes';
 import taxiStopsRoutes from './taxiStops.routes';
+import trafficLightsRoutes from './trafficLights.routes';
 
 const routes = Router();
 
@@ -26,5 +27,6 @@ routes.use('/bus-stops', busStopsRoutes);
 routes.use('/sidewalk-obstacles', sidewalkObstaclesRoutes);
 routes.use('/sidewalks', sidewalksRoutes);
 routes.use('/taxi-stops', taxiStopsRoutes);
+routes.use('/traffic-lights', trafficLightsRoutes);
 
 export default routes;
