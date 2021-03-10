@@ -34,7 +34,7 @@ class BusStopService {
     const busStopRepository = getRepository(BusStop);
 
     const busStop = await busStopRepository.query(
-      'INSERT INTO bus_stops (map_id, accessible_to_wheelchair, have_visual_notification, have_sound_notification, rain_covered, have_bus_lines_demonstraions, have_seats, notes, geom)' +
+      'INSERT INTO bus_stops (map_id, accessible_to_wheelchair, have_visual_notification, have_sound_notification, rain_covered, have_bus_lines_demonstrations, have_seats, notes, geom)' +
         'VALUES ($1, $2, $3, $4, $5, $6, $7, $8, ST_SetSRID(ST_MakePoint($9, $10), 4326))',
       [
         map_id,
@@ -57,7 +57,7 @@ class BusStopService {
     const busStopRepository = getRepository(BusStop);
 
     const busStop = await busStopRepository.query(
-      'SELECT map_id, accessible_to_wheelchair, have_visual_notification, have_sound_notification, rain_covered, have_bus_lines_demonstraions, have_seats, notes, ST_X(geom::geometry), ST_Y(geom::geometry) FROM bus_stops WHERE map_id = $1',
+      'SELECT map_id, accessible_to_wheelchair, have_visual_notification, have_sound_notification, rain_covered, have_bus_lines_demonstrations, have_seats, notes, ST_X(geom::geometry), ST_Y(geom::geometry) FROM bus_stops WHERE map_id = $1',
       [map_id],
     );
 

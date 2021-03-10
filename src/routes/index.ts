@@ -31,6 +31,6 @@ routes.use('/sidewalks', sidewalksRoutes);
 routes.use('/taxi-stops', taxiStopsRoutes);
 routes.use('/traffic-lights', trafficLightsRoutes);
 routes.use('/train-cross', trainCrossRoutes);
-routes.use('/train-lines', trainLinesRoutes);
+routes.use('/trains', trainLinesRoutes);
 
 export default routes;
