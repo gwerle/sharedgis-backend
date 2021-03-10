@@ -13,6 +13,7 @@ import sidewalksRoutes from './sidewalks.routes';
 import taxiStopsRoutes from './taxiStops.routes';
 import trafficLightsRoutes from './trafficLights.routes';
 import trainCrossRoutes from './trainCross.routes';
+import trainLinesRoutes from './trainLines.routes';
 
 const routes = Router();
 
@@ -30,5 +31,6 @@ routes.use('/sidewalks', sidewalksRoutes);
 routes.use('/taxi-stops', taxiStopsRoutes);
 routes.use('/traffic-lights', trafficLightsRoutes);
 routes.use('/train-cross', trainCrossRoutes);
+routes.use('/train-lines', trainLinesRoutes);
 
 export default routes;
