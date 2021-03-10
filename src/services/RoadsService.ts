@@ -1,5 +1,4 @@
 import { getRepository } from 'typeorm';
-import AccessibilityRamp from '../models/AccessibilityRamp';
 import Roads from '../models/Roads';
 
 interface POSTRequest {
@@ -10,6 +9,7 @@ interface POSTRequest {
   paved: boolean;
   roadCondition: string;
   havePublicTransportation: boolean;
+  notes: string;
   linestring: any;
 }
 
@@ -26,6 +26,7 @@ class RoadsService {
     paved,
     roadCondition,
     havePublicTransportation,
+    notes,
     linestring,
   }: POSTRequest): Promise<any> {
     const roadsRepository = getRepository(Roads);
@@ -39,8 +40,8 @@ class RoadsService {
     const query = `LINESTRING(${linestringFormatted})`;
 
     const road = await roadsRepository.query(
-      'INSERT INTO roads (map_id, name, way, slope, paved, road_condition, have_bus_lines, geom)' +
-        `VALUES ($1, $2, $3, $4, $5, $6, $7, ST_GeomFromText($8))`,
+      'INSERT INTO roads (map_id, name, way, slope, paved, road_condition, have_bus_lines, notes, geom)' +
+        `VALUES ($1, $2, $3, $4, $5, $6, $7, $8, ST_GeomFromText($9))`,
       [
         map_id,
         name,
@@ -49,6 +50,7 @@ class RoadsService {
         paved,
         roadCondition,
         havePublicTransportation,
+        notes,
         query,
       ],
     );
@@ -60,7 +62,7 @@ class RoadsService {
     const roadsRepository = getRepository(Roads);
 
     const roads = await roadsRepository.query(
-      'SELECT map_id, name, way, slope, paved, road_condition, have_bus_lines, ST_AsText(geom) FROM roads WHERE map_id = $1',
+      'SELECT map_id, name, way, slope, paved, road_condition, have_bus_lines, notes, ST_AsText(geom) FROM roads WHERE map_id = $1',
       [map_id],
     );
 
