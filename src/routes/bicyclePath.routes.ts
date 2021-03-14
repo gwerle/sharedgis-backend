@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import BicyclePathService from '../services/BicyclePathService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import RemovePointsService from '../services/RemovePointsService';
 
 const bicyclePathRoutes = Router();
 
@@ -37,6 +38,16 @@ bicyclePathRoutes.get('/', async (request, response) => {
   });
 
   return response.json(bicyclePath);
+});
+
+bicyclePathRoutes.delete('/:id', async (request, response) => {
+  const { id } = request.params as any;
+  const removePointsService = new RemovePointsService();
+  const layer = 'bicycle_paths';
+
+  const accessibilityRamp = await removePointsService.execute(id, layer);
+
+  return response.json(accessibilityRamp);
 });
 
 export default bicyclePathRoutes;

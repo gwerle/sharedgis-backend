@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import AccessibilityRampService from '../services/AccessibilityRampService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import RemovePointsService from '../services/RemovePointsService';
 
 const accessibilityRampsRoutes = Router();
 
@@ -37,6 +38,16 @@ accessibilityRampsRoutes.get('/', async (request, response) => {
   const accessibilityRamp = await accessibilityRampService.getByMap({
     map_id,
   });
+
+  return response.json(accessibilityRamp);
+});
+
+accessibilityRampsRoutes.delete('/:id', async (request, response) => {
+  const { id } = request.params as any;
+  const removePointsService = new RemovePointsService();
+  const layer = 'accessibility_ramps';
+
+  const accessibilityRamp = await removePointsService.execute(id, layer);
 
   return response.json(accessibilityRamp);
 });

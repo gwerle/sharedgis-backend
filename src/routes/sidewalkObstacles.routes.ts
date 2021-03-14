@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import SidewalkObstacleService from '../services/SidewalkObstacleService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import RemovePointsService from '../services/RemovePointsService';
 
 const sidewalkObstaclesRoutes = Router();
 
@@ -30,6 +31,16 @@ sidewalkObstaclesRoutes.get('/', async (request, response) => {
   });
 
   return response.json(sidewalkObstacle);
+});
+
+sidewalkObstaclesRoutes.delete('/:id', async (request, response) => {
+  const { id } = request.params as any;
+  const removePointsService = new RemovePointsService();
+  const layer = 'sidewalk_obstacles';
+
+  const item = await removePointsService.execute(id, layer);
+
+  return response.json(item);
 });
 
 export default sidewalkObstaclesRoutes;

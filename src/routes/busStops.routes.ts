@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import BusStopService from '../services/BusStopService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import RemovePointsService from '../services/RemovePointsService';
 
 const busStopsRoutes = Router();
 
@@ -47,6 +48,16 @@ busStopsRoutes.get('/', async (request, response) => {
   });
 
   return response.json(busStop);
+});
+
+busStopsRoutes.delete('/:id', async (request, response) => {
+  const { id } = request.params as any;
+  const removePointsService = new RemovePointsService();
+  const layer = 'bus_stops';
+
+  const item = await removePointsService.execute(id, layer);
+
+  return response.json(item);
 });
 
 export default busStopsRoutes;

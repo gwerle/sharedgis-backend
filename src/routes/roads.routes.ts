@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import RemovePointsService from '../services/RemovePointsService';
 import RoadsService from '../services/RoadsService';
 
 const roadsRoutes = Router();
@@ -44,6 +45,16 @@ roadsRoutes.get('/', async (request, response) => {
   const roads = await roadsService.getByMapId({ map_id });
 
   return response.json(roads);
+});
+
+roadsRoutes.delete('/:id', async (request, response) => {
+  const { id } = request.params as any;
+  const removePointsService = new RemovePointsService();
+  const layer = 'roads';
+
+  const item = await removePointsService.execute(id, layer);
+
+  return response.json(item);
 });
 
 export default roadsRoutes;

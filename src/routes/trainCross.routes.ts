@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import TrainCrossService from '../services/TrainCrossService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import RemovePointsService from '../services/RemovePointsService';
 
 const trainCrossRoutes = Router();
 
@@ -41,6 +42,16 @@ trainCrossRoutes.get('/', async (request, response) => {
   });
 
   return response.json(trainCross);
+});
+
+trainCrossRoutes.delete('/:id', async (request, response) => {
+  const { id } = request.params as any;
+  const removePointsService = new RemovePointsService();
+  const layer = 'train_cross';
+
+  const item = await removePointsService.execute(id, layer);
+
+  return response.json(item);
 });
 
 export default trainCrossRoutes;

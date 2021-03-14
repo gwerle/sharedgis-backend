@@ -38,7 +38,7 @@ class CreateAccessibilityRamp {
     const accessibilityRampRepository = getRepository(AccessibilityRamp);
 
     const accesibilityRamp = await accessibilityRampRepository.query(
-      'SELECT id, map_id, inclination, have_visual_notification, ST_X(geom::geometry), ST_Y(geom::geometry) FROM accessibility_ramps WHERE map_id = $1',
+      'SELECT id, map_id, inclination, have_visual_notification, notes, ST_X(geom::geometry), ST_Y(geom::geometry) FROM accessibility_ramps WHERE map_id = $1',
       [map_id],
     );
 
