@@ -40,7 +40,7 @@ class TrainLineService {
     const trainLineRepository = getRepository(TrainLine);
 
     const trainLines = await trainLineRepository.query(
-      'SELECT map_id, notes, ST_AsText(geom) FROM train_lines WHERE map_id = $1',
+      'SELECT id, map_id, notes, ST_AsText(geom) FROM train_lines WHERE map_id = $1',
       [map_id],
     );
 

@@ -62,7 +62,7 @@ class RoadsService {
     const roadsRepository = getRepository(Roads);
 
     const roads = await roadsRepository.query(
-      'SELECT map_id, name, way, slope, paved, road_condition, have_bus_lines, notes, ST_AsText(geom) FROM roads WHERE map_id = $1',
+      'SELECT id, map_id, name, way, slope, paved, road_condition, have_bus_lines, notes, ST_AsText(geom) FROM roads WHERE map_id = $1',
       [map_id],
     );
 

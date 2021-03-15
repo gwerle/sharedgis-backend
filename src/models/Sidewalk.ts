@@ -23,7 +23,7 @@ type SurfaceSituation =
 type Surface =
   | 'ASPHALT'
   | 'CONCRETE'
-  | 'INTERMEDIATE'
+  | 'COMPACTED'
   | 'SETT'
   | 'GROUND'
   | 'GRASS';
@@ -42,7 +42,7 @@ class Sidewalk {
   @Column({
     name: 'surface',
     type: 'enum',
-    enum: ['ASPHALT', 'CONCRETE', 'INTERMEDIATE', 'SETT', 'GROUND', 'GRASS'],
+    enum: ['ASPHALT', 'CONCRETE', 'COMPACTED', 'SETT', 'GROUND', 'GRASS'],
   })
   surface: Surface;
 

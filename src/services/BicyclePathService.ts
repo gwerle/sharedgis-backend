@@ -44,7 +44,7 @@ class BicyclePathService {
     const bicyclePathRepository = getRepository(BicyclePath);
 
     const bicyclePaths = await bicyclePathRepository.query(
-      'SELECT map_id, surface_situation, bicycle_path_type, notes, ST_AsText(geom) FROM bicycle_paths WHERE map_id = $1',
+      'SELECT id, map_id, surface_situation, bicycle_path_type, notes, ST_AsText(geom) FROM bicycle_paths WHERE map_id = $1',
       [map_id],
     );
 
