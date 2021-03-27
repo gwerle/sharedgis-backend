@@ -42,13 +42,13 @@ class SidewalkService {
     const query = `LINESTRING(${linestringFormatted})`;
 
     const sidewalk = await sidewalkRepository.query(
-      'INSERT INTO sidewalks (id, map_id, surface, surface_situation, width, have_tacticle_paving, have_contrasted_tacticle_paving, tacticle_paving_color, tacticle_paving_situation, notes, geom)' +
+      'INSERT INTO sidewalks (map_id, surface, surface_situation, width, have_tacticle_paving, have_contrasted_tacticle_paving, tacticle_paving_color, tacticle_paving_situation, notes, geom)' +
         `VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, ST_GeomFromText($10))`,
       [
         map_id,
         surface,
         surfaceSituation,
-        width,
+        Number(width),
         haveTacticlePaving,
         haveContrastedTacticlePaving,
         tacticlePavingColor,
@@ -65,7 +65,7 @@ class SidewalkService {
     const sidewalkRepository = getRepository(Sidewalk);
 
     const sidewalks = await sidewalkRepository.query(
-      'SELECT map_id, surface, surface_situation, width, have_tacticle_paving, have_contrasted_tacticle_paving, tacticle_paving_color, tacticle_paving_situation, notes, ST_AsText(geom) FROM sidewalks WHERE map_id = $1',
+      'SELECT id, map_id, surface, surface_situation, width, have_tacticle_paving, have_contrasted_tacticle_paving, tacticle_paving_color, tacticle_paving_situation, notes, ST_AsText(geom) FROM sidewalks WHERE map_id = $1',
       [map_id],
     );
 
